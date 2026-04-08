@@ -1,3 +1,27 @@
+# Preflight Intent Governor (Integration)
+
+This fork includes a deterministic pre-execution guard that prevents repeated failed parameter configurations.
+
+### What’s added
+- Preflight check before training
+- Post-execution failure recording
+- Blocking of repeated failed parameter values
+
+### Example (validated)
+Run 1: eps = -1e-10 → FAIL → recorded
+Run 2: eps = -1e-10 → BLOCKED (preflight)
+Run 3: eps = 1e-10 → ALLOWED → SUCCESS
+
+
+### Enable
+
+```bash
+AUTORESEARCH_GOVERNOR_ENABLED=1 \
+AUTORESEARCH_GOVERNOR_HISTORY_PATH=./governor.jsonl \
+AUTORESEARCH_GOVERNOR_RUN_ID=<run_id> \
+uv run train.py
+```
+
 # autoresearch
 
 ![teaser](progress.png)
